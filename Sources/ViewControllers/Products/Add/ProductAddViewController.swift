@@ -350,6 +350,8 @@ class ProductAddViewController: TakePictureViewController {
         })
         saveNutriments()
 
+        AnalyticsManager.shared.track(event: Events.Products.edited(barcode: self.barcode))
+        
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -386,6 +388,8 @@ class ProductAddViewController: TakePictureViewController {
                     self?.saveNutrimentsButton.isEnabled = true
                 }
         })
+
+        AnalyticsManager.shared.track(event: Events.Products.editedNutritionFacts(barcode: self.barcode))
     }
 
     @IBAction func didTapIgnoreIngredientsButton(_ sender: Any) {
@@ -429,6 +433,7 @@ class ProductAddViewController: TakePictureViewController {
                     self?.saveIngredientsButton.isEnabled = true
                 }
         })
+        AnalyticsManager.shared.track(event: Events.Products.editedIngredients(barcode: self.barcode))
     }
 
     fileprivate func refreshNovaScore() {

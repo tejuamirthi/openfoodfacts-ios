@@ -75,7 +75,7 @@ struct ProductImage {
                 "fileName": fileName,
                 "message": "Unable to get UIImageJPEGRepresentation"
                 ])
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
             return nil
         }
 
@@ -85,7 +85,7 @@ struct ProductImage {
             try data.write(to: imageURL)
             return fileName
         } catch let error {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
             return nil
         }
     }
@@ -97,7 +97,7 @@ struct ProductImage {
             let imageData = try Data(contentsOf: imageURL)
             return UIImage(data: imageData)
         } catch let error {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
             return nil
         }
     }
@@ -108,7 +108,7 @@ struct ProductImage {
             let imageURL = documentsURL.appendingPathComponent(fileName)
             try FileManager.default.removeItem(at: imageURL)
         } catch let error {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 }

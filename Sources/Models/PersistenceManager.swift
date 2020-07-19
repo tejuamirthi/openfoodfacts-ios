@@ -95,7 +95,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 realm.delete(item)
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -107,7 +107,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 realm.add(objects, update: .all)
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -144,7 +144,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                     realm.add(item, update: .all)
                 }
             } catch let error as NSError {
-                AnalyticsManager.record(error: error)
+                AnalyticsManager.shared.record(error: error)
             }
         }
     }
@@ -158,7 +158,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                     realm.delete(realm.objects(HistoryItem.self))
                 }
             } catch let error as NSError {
-                AnalyticsManager.record(error: error)
+                AnalyticsManager.shared.record(error: error)
             }
         }
     }
@@ -254,7 +254,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 realm.delete(barcodes)
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -388,7 +388,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 realm.add(prefs)
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
         return prefs
     }
@@ -404,7 +404,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 }
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -418,7 +418,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 }
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -434,7 +434,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                 settings.offlineStatus?.savedProductsCount = savedProductsCount
             }
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -500,7 +500,7 @@ class PersistenceManager: PersistenceManagerProtocol {
             let count = getItemsPendingUpload().count
             NotificationCenter.default.post(name: .pendingUploadBadgeChange, object: nil, userInfo: [NotificationUserInfoKey.pendingUploadItemCount: count])
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
     }
 
@@ -527,7 +527,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                     realm.add(realmItem, update: .all)
                 }
             } catch let error as NSError {
-                AnalyticsManager.record(error: error)
+                AnalyticsManager.shared.record(error: error)
             }
         }
     }
@@ -551,7 +551,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                     realm.delete(realmItem)
                 }
             } catch let error as NSError {
-                AnalyticsManager.record(error: error)
+                AnalyticsManager.shared.record(error: error)
             }
         }
     }
@@ -565,7 +565,7 @@ class PersistenceManager: PersistenceManagerProtocol {
                     realm.add(realmItem, update: .all)
                 }
             } catch let error as NSError {
-                AnalyticsManager.record(error: error)
+                AnalyticsManager.shared.record(error: error)
             }
         }
     }
@@ -581,7 +581,7 @@ class PersistenceManager: PersistenceManagerProtocol {
         do {
             return try Realm()
         } catch let error as NSError {
-            AnalyticsManager.record(error: error)
+            AnalyticsManager.shared.record(error: error)
         }
         fatalError("Could not get Realm instance")
     }
