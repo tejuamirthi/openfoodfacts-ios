@@ -11,7 +11,18 @@ import Foundation
 struct Form {
     var title: String
     var rows: [FormRow]
+    var sections: [FormSection]
 
+    init(title: String, rows:[FormRow], sections: [FormSection]? = nil) {
+        self.title = title
+        self.rows = rows
+        guard let sections = sections else {
+            self.sections = [FormSection(rows: rows.count)]
+            return
+        }
+        self.sections = sections
+    }
+    
     func getCellTypes() -> [ProductDetailBaseCell.Type] {
         return [
             InfoRowTableViewCell.self,
@@ -25,6 +36,15 @@ struct Form {
             SummaryFooterCell.self,
             HostedViewCell.self
         ]
+    }
+}
+
+struct FormSection {
+    var title: String?
+    var rows: Int
+    init(title: String? = nil, rows: Int = 0) {
+        self.title = title
+        self.rows = rows
     }
 }
 

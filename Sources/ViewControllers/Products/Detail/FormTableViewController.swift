@@ -131,16 +131,27 @@ class FormTableViewController: UITableViewController {
 // MARK: - TableView Data Source
 extension FormTableViewController {
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return form.sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return form.rows.count
+        return form.sections[section].rows
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return form.sections[section].title
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let formRow = form.rows[indexPath.row]
-        return getCell(for: formRow)
+        if indexPath.section == 0 {
+            let formRow = form.rows[indexPath.row]
+            return getCell(for: formRow)
+        }
+        var sectionOffset: Int = 0
+        for index in 0..<indexPath.section {
+            sectionOffset += form.sections[index].rows
+        }
+        return getCell(for: form.rows[sectionOffset + indexPath.row])
     }
 }
 
