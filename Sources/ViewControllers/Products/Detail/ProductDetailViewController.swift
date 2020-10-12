@@ -206,9 +206,7 @@ class ProductDetailViewController: ButtonBarPagerTabStripViewController, DataMan
         createFormRow(with: &rows, item: product.barcode, label: InfoRowKey.barcode.localizedString, isCopiable: true)
         createFormRow(with: &rows, item: product.genericName, label: InfoRowKey.genericName.localizedString, isCopiable: true)
         createFormRow(with: &rows, item: product.packaging, label: InfoRowKey.packaging.localizedString)
-        createFormRow(with: &rows, item: product.manufacturingPlaces, label: InfoRowKey.manufacturingPlaces.localizedString)
-        createFormRow(with: &rows, item: product.origins, label: InfoRowKey.origins.localizedString)
-
+        
         createFormRow(with: &rows, item: product.categoriesTags?.map({ (categoryTag: String) -> NSAttributedString in
             if let category = dataManager.category(forTag: categoryTag) {
                 if let name = Tag.choose(inTags: Array(category.names)) {
@@ -226,13 +224,15 @@ class ProductDetailViewController: ButtonBarPagerTabStripViewController, DataMan
             }
             return NSAttributedString(string: labelTag)
         }), label: InfoRowKey.labels.localizedString)
+        let section = FormSection(rows: rows.count)
 
+        createFormRow(with: &rows, item: product.origins, label: InfoRowKey.origins.localizedString)
+        createFormRow(with: &rows, item: product.manufacturingPlaces, label: InfoRowKey.manufacturingPlaces.localizedString)
         createFormRow(with: &rows, item: product.embCodesTags?.map({ (tag: String) -> NSAttributedString in
             return NSAttributedString(string: tag.uppercased().replacingOccurrences(of: "-", with: " "),
                                       attributes: [NSAttributedString.Key.link: OFFUrlsHelper.url(forEmbCodeTag: tag)])
         }), label: InfoRowKey.embCodes.localizedString)
 
-        createFormRow(with: &rows, item: product.stores, label: InfoRowKey.stores.localizedString)
         createFormRow(with: &rows, item: product.countriesTags?.map({ (tag: String) -> NSAttributedString in
             if let country = dataManager.country(forTag: tag) {
                 if let name = Tag.choose(inTags: Array(country.names)) {
@@ -242,12 +242,18 @@ class ProductDetailViewController: ButtonBarPagerTabStripViewController, DataMan
             return NSAttributedString(string: tag)
         }), label: InfoRowKey.countries.localizedString)
 
+        createFormRow(with: &rows, item: product.stores, label: InfoRowKey.stores.localizedString)
+
+        let traceabilitySection = FormSection(title: "Traceability", rows: rows.count - section.rows)
+
         // Footer
         rows.append(FormRow(value: product as Any, cellType: SummaryFooterCell.self))
 
+        let footerSection = FormSection(rows: 1)
+
         let summaryTitle = "product-detail.page-title.summary".localized
 
-        return Form(title: summaryTitle, rows: rows)
+        return Form(title: summaryTitle, rows: rows, sections: [section, traceabilitySection, footerSection])
     }
 
     // swiftlint:disable function_body_length
